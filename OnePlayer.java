@@ -1,11 +1,13 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+//import java.util.Random;
 
-public class rd_board_display {
+public class OnePlayer extends ComputerEasy{
     //declare 
     int gameCount = 0;
     boolean winCheck = false;
+    int[] compMove;
 
     JFrame frame = new JFrame();
     Font titleFont = new Font("Verdana", Font.PLAIN, 36);
@@ -28,7 +30,7 @@ public class rd_board_display {
     String player1;
     String player2;
 
-    public rd_board_display(){  //constructor
+    public OnePlayer(){  //constructor
         //initalize objects
 
         //set up frame
@@ -94,6 +96,7 @@ public class rd_board_display {
                         JButton tile = (JButton) e.getSource();  // don't understand this part.  took from youtube video
                         if (winCheck == false){
                         if (tile.getIcon() != rocket && tile.getIcon() != dragon){
+                            // user's turn
                             if (gameCount % 2 == 0){
                                 tile.setIcon(rocket);
                                 gameCount++;
@@ -103,12 +106,14 @@ public class rd_board_display {
                                     System.out.println("Rockets Win!");
                                     return;
                                 }
-                            }
-                            else {
-                                tile.setIcon(dragon);
+        
+                            // computer's turn
+                                compMove = computerMove(intBoard);
+                                intBoard[compMove[0]][compMove[1]] = -1;
+                                btnBoard[compMove[0]][compMove[1]].setIcon(dragon);
                                 gameCount++;
-                                boardManager();
                                 winCheck = winCheck(intBoard);
+                                
                                 while (winCheck == true){
                                     System.out.println("Dragons Win!");
                                     return;
@@ -178,7 +183,34 @@ public class rd_board_display {
         this.player2 = name;
         lblOpponents.setText(player1 + " vs. " + player2);
     }
+
+    public void pause(int time){
+        try {
+            Thread.sleep(time);
+        } catch (Exception e) {
+            System.out.println("Can't pause");
+        }
+    }
+/* 
+    public void computerMove(){
+        
+        System.out.println("Called computer move function");
+        Random rand = new Random();
+
+        int i;
+        int j;
+
+        do {
+        i = rand.nextInt(3);
+        j = rand.nextInt(3);
+        }
+        while (intBoard[i][j] != 0);
+
+        intBoard[i][j] = -1;
+        btnBoard[i][j].setIcon(dragon);
+    }*/
 }
 
    
+
 

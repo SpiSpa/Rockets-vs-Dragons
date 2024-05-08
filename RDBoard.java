@@ -51,11 +51,12 @@ public class RDBoard {
             System.exit(0);
         }
         else if (gameOption == 0){
-            System.out.println("Here's where we put the easy computer");
+            OnePlayer board = new OnePlayer();
             player1 = playerNames("Player 1");
             player2 = "Computer - Easy";
+            board.setPlayer1(player1);
+            board.setPlayer2(player2);
             System.out.println("Player 1: " + player1 + "Player 2: " + player2);
-            System.exit(0);
         }
 
         
