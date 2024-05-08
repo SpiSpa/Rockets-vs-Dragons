@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 //import java.util.Random;
 
-public class OnePlayer extends ComputerEasy{
+public class OnePlayer extends Computer{
     //declare 
     int gameCount = 0;
     boolean winCheck = false;
@@ -112,7 +112,12 @@ public class OnePlayer extends ComputerEasy{
                                 }
         
                             // computer's turn
-                                compMove = computerMove(intBoard);
+                                if (player2 == "Computer - Easy"){
+                                    compMove = computerMoveEasy(intBoard);
+                                }
+                                else if (player2 == "Computer - Hard"){
+                                    compMove = computerMoveHard(intBoard);
+                                }
                                 intBoard[compMove[0]][compMove[1]] = -1;
                                 btnBoard[compMove[0]][compMove[1]].setIcon(dragon);
                                 gameCount++;
