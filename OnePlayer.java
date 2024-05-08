@@ -18,6 +18,7 @@ public class OnePlayer extends ComputerEasy{
     JPanel bottomPanel = new JPanel();
     JPanel buttonPanel = new JPanel();
 
+    String cwd;
     ImageIcon rocket = new ImageIcon();
     ImageIcon dragon = new ImageIcon();
 
@@ -76,8 +77,11 @@ public class OnePlayer extends ComputerEasy{
 
         //set up buttons, icons, and parallel array for game area and manager
 
-        rocket = new ImageIcon("/Users/sarabellus/Desktop/Rockets_Dragons/rocket.jpg");
-        dragon = new ImageIcon("/Users/sarabellus/Desktop/Rockets_Dragons/dragon.jpg");
+        cwd = System.getProperty("user.dir");
+        System.out.println(cwd);
+        rocket = new ImageIcon(cwd + "/rocket.jpg");
+        dragon = new ImageIcon(cwd + "/dragon.jpg");
+        
        
         buttonPanel.setSize(500, 500);
         buttonPanel.setLocation(50, 150);
