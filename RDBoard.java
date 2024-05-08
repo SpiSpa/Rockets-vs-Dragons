@@ -1,9 +1,32 @@
 import javax.swing.JOptionPane;
 
+
 public class RDBoard {
 
-    
+    public static String playerNames(String playerNum){
+        String player;
+        int playerInt;
+        int zeroCheck;
+
+            do {   
+                player = JOptionPane.showInputDialog("Enter " + playerNum + " name.\n Name has a 10 character max.");
+                playerInt = player.length();
+                try{
+                    zeroCheck = 10 / playerInt;
+                }
+                catch (ArithmeticException e){
+                    JOptionPane.showMessageDialog(null, "Name is empty, please enter a name");
+                    playerInt = 0;
+                }}
+                while(playerInt == 0 || playerInt > 10);  
+           
+        return player;
+    }
+
     public static void main(String[] args) {
+
+        String player1;
+        String player2;
 
         int gameOption;
 
@@ -13,14 +36,25 @@ public class RDBoard {
 
         if (gameOption == 2){
             rd_board_display board = new rd_board_display();
-            
+            player1 = playerNames("Player 1");
+            player2 = playerNames("Player 2");
+            board.setPlayer1(player1);
+            board.setPlayer2(player2);
+            System.out.println("Player 1: " + player1 + "Player 2: " + player2);
         }
+
         else if (gameOption == 1){
             System.out.println("Here's where we put the hard computer");
+            player1 = playerNames("Player 1");
+            player2 = "Computer - Hard";
+            System.out.println("Player 1: " + player1 + "Player 2: " + player2);
             System.exit(0);
         }
         else if (gameOption == 0){
             System.out.println("Here's where we put the easy computer");
+            player1 = playerNames("Player 1");
+            player2 = "Computer - Easy";
+            System.out.println("Player 1: " + player1 + "Player 2: " + player2);
             System.exit(0);
         }
 
