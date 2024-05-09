@@ -50,7 +50,6 @@ public class RDBoard {
             board.setPlayer1(player1);
             board.setPlayer2(player2);
             System.out.println("Player 1: " + player1 + "Player 2: " + player2);
-            
         }
         else if (gameOption == 0){
             OnePlayer board = new OnePlayer();
@@ -59,9 +58,6 @@ public class RDBoard {
             board.setPlayer1(player1);
             board.setPlayer2(player2);
             System.out.println("Player 1: " + player1 + "Player 2: " + player2);
-        }
-
-        
-        
+        } 
     }
 }

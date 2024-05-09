@@ -53,10 +53,6 @@ public class rd_board_display {
         topPanel.setLayout(null);
         topPanel.add(lblOpponents);
         topPanel.add(lblTitle);
-        
-
-        
-        //frame.add(lblOpponents, BorderLayout.AFTER_LAST_LINE);
 
         btnReset.setText("Reset");
         btnReset.setHorizontalAlignment(JButton.CENTER);
@@ -72,6 +68,8 @@ public class rd_board_display {
         bottomPanel.setLocation(50, 700);
         bottomPanel.add(btnReset);
         bottomPanel.add(btnQuit);
+
+        //TODO:  print function 
 
         //set up buttons, icons, and parallel array for game area and manager
 
@@ -98,21 +96,16 @@ public class rd_board_display {
                         if (tile.getIcon() != rocket && tile.getIcon() != dragon){
                             if (gameCount % 2 == 0){
                                 tile.setIcon(rocket);
-                                gameCount++;
                                 boardManager();
-                                winCheck = winCheck(intBoard);
-                                while (winCheck == true){
-                                    System.out.println("Rockets Win!");
-                                    return;
-                                }
+                                gameCount++;
+                                winCheck = winCheck(intBoard, player1);
                             }
                             else {
                                 tile.setIcon(dragon);
                                 gameCount++;
                                 boardManager();
-                                winCheck = winCheck(intBoard);
+                                winCheck = winCheck(intBoard, player2);
                                 while (winCheck == true){
-                                    System.out.println("Dragons Win!");
                                     return;
                             }
                         }}
@@ -142,7 +135,7 @@ public class rd_board_display {
         return intBoard;
     }
 
-    public boolean winCheck(int[][] board){
+    public boolean winCheck(int[][] board, String player){
         int horSum;
         int verSum;
         int diag1Sum;
@@ -152,6 +145,7 @@ public class rd_board_display {
         diag2Sum = board[0][2] + board[1][1] + board [2][0];
 
         if (diag1Sum == 3 || diag1Sum == -3 || diag2Sum == 3 || diag2Sum == -3){
+            System.out.println(player + " is the winner!");
             return true;
         }
         for(int i = 0; i < 3; i++){
@@ -159,8 +153,13 @@ public class rd_board_display {
             verSum = board[0][i] + board[1][i] + board[2][i];
 
             if (horSum == 3 || verSum == 3 || horSum == -3 || verSum == -3){
+                System.out.println(player + " is the winner!");
                 return true;
             }
+        }
+        if (gameCount == 9){
+            System.out.println("It's a tie!");
+            return true;
         }
         return false;
     }

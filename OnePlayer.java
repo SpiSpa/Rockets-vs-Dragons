@@ -105,10 +105,7 @@ public class OnePlayer extends Computer{
                                 tile.setIcon(rocket);
                                 gameCount++;
                                 boardManager();
-                                winCheck = winCheck(intBoard);
-                                while (winCheck == true){
-                                    System.out.println("Rockets Win!");
-                                    return;
+                                winCheck = winCheck(intBoard, player1);
                                 }
         
                             // computer's turn
@@ -121,15 +118,12 @@ public class OnePlayer extends Computer{
                                 intBoard[compMove[0]][compMove[1]] = -1;
                                 btnBoard[compMove[0]][compMove[1]].setIcon(dragon);
                                 gameCount++;
-                                winCheck = winCheck(intBoard);
+                                System.out.println("Game count: " + gameCount);
+                                winCheck = winCheck(intBoard, player2);
                                 
-                                while (winCheck == true){
-                                    System.out.println("Dragons Win!");
-                                    return;
-                            }
                         }}
                     }
-            }});
+            });
             }
         }
         frame.add(topPanel, BorderLayout.NORTH);
@@ -154,7 +148,7 @@ public class OnePlayer extends Computer{
         return intBoard;
     }
 
-    public boolean winCheck(int[][] board){
+    public boolean winCheck(int[][] board, String player){
         int horSum;
         int verSum;
         int diag1Sum;
@@ -164,6 +158,7 @@ public class OnePlayer extends Computer{
         diag2Sum = board[0][2] + board[1][1] + board [2][0];
 
         if (diag1Sum == 3 || diag1Sum == -3 || diag2Sum == 3 || diag2Sum == -3){
+            System.out.println(player + " is the winner!");
             return true;
         }
         for(int i = 0; i < 3; i++){
@@ -171,8 +166,13 @@ public class OnePlayer extends Computer{
             verSum = board[0][i] + board[1][i] + board[2][i];
 
             if (horSum == 3 || verSum == 3 || horSum == -3 || verSum == -3){
+                System.out.println(player + " is the winner!");
                 return true;
             }
+        }
+        if (gameCount == 9){
+            System.out.println("It's a tie!");
+            return true;
         }
         return false;
     }
@@ -200,24 +200,6 @@ public class OnePlayer extends Computer{
             System.out.println("Can't pause");
         }
     }
-/* 
-    public void computerMove(){
-        
-        System.out.println("Called computer move function");
-        Random rand = new Random();
-
-        int i;
-        int j;
-
-        do {
-        i = rand.nextInt(3);
-        j = rand.nextInt(3);
-        }
-        while (intBoard[i][j] != 0);
-
-        intBoard[i][j] = -1;
-        btnBoard[i][j].setIcon(dragon);
-    }*/
 }
 
    
