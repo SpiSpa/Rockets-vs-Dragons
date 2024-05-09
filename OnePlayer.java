@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 //import java.util.Random;
+import java.io.FileWriter;
 
 public class OnePlayer extends Computer{
     //declare 
@@ -106,6 +107,9 @@ public class OnePlayer extends Computer{
                                 gameCount++;
                                 boardManager();
                                 winCheck = winCheck(intBoard, player1);
+                                if (winCheck == true){
+                                    return;
+                                }
                                 }
         
                             // computer's turn
@@ -158,7 +162,8 @@ public class OnePlayer extends Computer{
         diag2Sum = board[0][2] + board[1][1] + board [2][0];
 
         if (diag1Sum == 3 || diag1Sum == -3 || diag2Sum == 3 || diag2Sum == -3){
-            System.out.println(player + " is the winner!");
+            lblTitle.setText(player + " wins!");
+            writeToFile(player1, player2, player);
             return true;
         }
         for(int i = 0; i < 3; i++){
@@ -166,12 +171,14 @@ public class OnePlayer extends Computer{
             verSum = board[0][i] + board[1][i] + board[2][i];
 
             if (horSum == 3 || verSum == 3 || horSum == -3 || verSum == -3){
-                System.out.println(player + " is the winner!");
+                lblTitle.setText(player + " wins!");
+                writeToFile(player1, player2, player);
                 return true;
             }
         }
         if (gameCount == 9){
-            System.out.println("It's a tie!");
+            lblTitle.setText("It's a tie!");
+            writeToFile(player1, player2, player);
             return true;
         }
         return false;
@@ -198,6 +205,19 @@ public class OnePlayer extends Computer{
             Thread.sleep(time);
         } catch (Exception e) {
             System.out.println("Can't pause");
+        }
+    }
+
+    public void writeToFile(String player1, String player2, String winner){
+    String result;
+    result = ("Player 1: " + player1 + "vs. Player 2: " + player2 + "\tWinner: " + winner );
+    try {
+        FileWriter fileWriter = new FileWriter("rockets_vs_dragons_results.txt\n", true);
+        fileWriter.write(result);
+        fileWriter.close();
+        }
+        catch (Exception e){
+        e.getStackTrace();
         }
     }
 }
