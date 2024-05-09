@@ -57,7 +57,19 @@ public class rd_board_display {
 
         btnReset.setText("Reset");
         btnReset.setHorizontalAlignment(JButton.CENTER);
-        //TODO add action listener to reset the game
+        btnReset.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+                for (int i = 0; i < 3; i++){
+                    for (int j = 0; j < 3; j++){
+                        intBoard[i][j] = 0;
+                        btnBoard[i][j].setIcon(null);
+                        lblTitle.setText("Rockets vs. Dragons");
+                    }
+                gameCount = 0;
+                winCheck = false;
+                };
+            }
+        });
         btnQuit.setText("Quit");
         btnQuit.setHorizontalAlignment(JButton.CENTER);
         btnQuit.addActionListener(new ActionListener() {
@@ -69,8 +81,6 @@ public class rd_board_display {
         bottomPanel.setLocation(50, 700);
         bottomPanel.add(btnReset);
         bottomPanel.add(btnQuit);
-
-        //TODO:  print function 
 
         //set up buttons, icons, and parallel array for game area and manager
 
@@ -187,10 +197,10 @@ public class rd_board_display {
 
     public void writeToFile(String player1, String player2, String winner){
     String result;
-    result = ("Player 1: " + player1 + "vs. Player 2: " + player2 + "\tWinner: " + winner );
+    result = ("Player 1: " + player1 + " vs. Player 2: " + player2 + "\tWinner: " + winner );
     try {
         FileWriter fileWriter = new FileWriter("rockets_vs_dragons_results.txt\n", true);
-        fileWriter.write(result);
+        fileWriter.write("\n" + result);
         fileWriter.close();
         }
         catch (Exception e){
