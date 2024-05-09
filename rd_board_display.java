@@ -3,10 +3,11 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.FileWriter;
 
-public class rd_board_display {
+public class rd_board_display extends Computer{
     //declare variables
     int gameCount = 0;
     boolean winCheck = false;
+    int[] compMove;
 
     JFrame frame = new JFrame();
     Font titleFont = new Font("Verdana", Font.PLAIN, 36);
@@ -70,6 +71,7 @@ public class rd_board_display {
                 };
             }
         });
+
         btnQuit.setText("Quit");
         btnQuit.setHorizontalAlignment(JButton.CENTER);
         btnQuit.addActionListener(new ActionListener() {
@@ -77,13 +79,13 @@ public class rd_board_display {
                 System.exit(0);
             }
         });
+
         bottomPanel.setSize(500, 100);
         bottomPanel.setLocation(50, 700);
         bottomPanel.add(btnReset);
         bottomPanel.add(btnQuit);
 
         //set up buttons, icons, and parallel array for game area and manager
-
         cwd = System.getProperty("user.dir");
         rocket = new ImageIcon(cwd + "/rocket.jpg");
         dragon = new ImageIcon(cwd + "/dragon.jpg");
@@ -100,29 +102,78 @@ public class rd_board_display {
                 btnBoard[i][j] = button;
                 buttonPanel.add(button);
 
-                button.addActionListener(new ActionListener(){
-                    public void actionPerformed(ActionEvent e) {
-                        JButton tile = (JButton) e.getSource();  // don't understand this part.  took from youtube video
-                        if (winCheck == false){
-                        if (tile.getIcon() != rocket && tile.getIcon() != dragon){
-                            if (gameCount % 2 == 0){
-                                tile.setIcon(rocket);
-                                boardManager();
-                                gameCount++;
-                                winCheck = winCheck(intBoard, player1);
+                    button.addActionListener(new ActionListener(){
+                        public void actionPerformed(ActionEvent e) {
+                            JButton tile = (JButton) e.getSource();  // don't understand this part.  took from youtube video
+                            if (winCheck == false){
+                                if (tile.getIcon() != rocket && tile.getIcon() != dragon){
+                                    // user's turn
+                                    if (gameCount % 2 == 0){
+                                        tile.setIcon(rocket);
+                                        gameCount++;
+                                        boardManager();
+                                        winCheck = winCheck(intBoard, player1);
+                                        if (winCheck == true){
+                                            return;
+                                        }
+                                        if (player2 == "Computer - Easy" || player2 == "Computer - Hard"){
+                                            if (player2 == "Computer - Easy"){
+                                                compMove = computerMoveEasy(intBoard);
+                                            }
+                                            else if (player2 == "Computer - Hard"){
+                                                compMove = computerMoveHard(intBoard);
+                                            }
+    
+                                            intBoard[compMove[0]][compMove[1]] = -1;
+                                            btnBoard[compMove[0]][compMove[1]].setIcon(dragon);
+                                            gameCount++;
+                                            winCheck = winCheck(intBoard, player2);
+                                            return;
+                                        }   
+                                    }   
+                                        
+                                        else{
+                                            tile.setIcon(dragon);
+                                            gameCount++;
+                                            boardManager();
+                                            winCheck = winCheck(intBoard, player2);
+                                            while (winCheck == true){
+                                                return;   
+                                            }
+                                        }
+                                }
                             }
-                            else {
-                                tile.setIcon(dragon);
-                                gameCount++;
-                                boardManager();
-                                winCheck = winCheck(intBoard, player2);
-                                while (winCheck == true){
-                                    return;
+                        }
+                    });
+
+
+                /* 
+                    System.out.println("Executed two player game");
+                    button.addActionListener(new ActionListener(){
+                        public void actionPerformed(ActionEvent e) {
+                            JButton tile = (JButton) e.getSource();  // don't understand this part.  took from youtube video
+                            if (winCheck == false){
+                                if (tile.getIcon() != rocket && tile.getIcon() != dragon){
+                                    if (gameCount % 2 == 0){
+                                        tile.setIcon(rocket);
+                                        boardManager();
+                                        gameCount++;
+                                        winCheck = winCheck(intBoard, player1);
+                                    }
+                                    else {
+                                        tile.setIcon(dragon);
+                                        gameCount++;
+                                        boardManager();
+                                        winCheck = winCheck(intBoard, player2);
+                                        while (winCheck == true){
+                                            return;
+                                        }
+                                    }
+                                }
                             }
-                        }}
-                    }
-            }});
-            }
+                        }
+                    });
+             */ }
         }
         frame.add(topPanel, BorderLayout.NORTH);
         frame.add(bottomPanel, BorderLayout.SOUTH);

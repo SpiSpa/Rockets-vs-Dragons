@@ -44,7 +44,7 @@ public class RDBoard {
         }
 
         else if (gameOption == 1){
-            OnePlayer board = new OnePlayer();
+            rd_board_display board = new rd_board_display();
             player1 = playerNames("Player 1");
             player2 = "Computer - Hard";
             board.setPlayer1(player1);
@@ -52,7 +52,7 @@ public class RDBoard {
             System.out.println("Player 1: " + player1 + "Player 2: " + player2);
         }
         else if (gameOption == 0){
-            OnePlayer board = new OnePlayer();
+            rd_board_display board = new rd_board_display();
             player1 = playerNames("Player 1");
             player2 = "Computer - Easy";
             board.setPlayer1(player1);
